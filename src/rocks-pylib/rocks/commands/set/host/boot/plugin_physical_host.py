@@ -4,9 +4,10 @@
 # 
 # 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		         version 6.2 (SideWinder)
+# 		         version 6.2 (SideWindwer)
+# 		         version 7.0 (Manzanita)
 # 
-# Copyright (c) 2000 - 2014 The Regents of the University of California.
+# Copyright (c) 2000 - 2017 The Regents of the University of California.
 # All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -214,7 +215,10 @@ class Plugin(rocks.commands.Plugin):
 		# but not in the boot table. in this case, remove the current
 		# configuration file (if it exists) and return
 		#
-		filename = self.getFilename(nodeid)
+		try:
+			filename = self.getFilename(nodeid)
+		except:
+			return
 
 		nrows = self.db.execute("""select action from boot where
 			node = %s """ % (nodeid))
@@ -318,7 +322,10 @@ class Plugin(rocks.commands.Plugin):
 		# but not in the boot table. in this case, remove the current
 		# configuration file (if it exists) and return
 		#
-		filename = self.getUEFIFilename(nodeid)
+		try:
+			filename = self.getUEFIFilename(nodeid)
+		except:
+			return
 
 		nrows = self.db.execute("""select action from boot where
 			node = %s """ % (nodeid))

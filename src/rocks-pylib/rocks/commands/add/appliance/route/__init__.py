@@ -4,9 +4,10 @@
 # 
 # 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		         version 6.2 (SideWinder)
+# 		         version 6.2 (SideWindwer)
+# 		         version 7.0 (Manzanita)
 # 
-# Copyright (c) 2000 - 2014 The Regents of the University of California.
+# Copyright (c) 2000 - 2017 The Regents of the University of California.
 # All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -141,7 +142,7 @@ class Command(rocks.commands.add.appliance.command):
 			gateway = "''"
 		else:
 			subnet = None
-			gateway = "'%s'" % gateway
+			gateway = "%s" % gateway
 
 		# Now that we know things will work insert the route for
 		# all the appliances

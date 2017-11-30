@@ -4,9 +4,10 @@
 # 
 # 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		         version 6.2 (SideWinder)
+# 		         version 6.2 (SideWindwer)
+# 		         version 7.0 (Manzanita)
 # 
-# Copyright (c) 2000 - 2014 The Regents of the University of California.
+# Copyright (c) 2000 - 2017 The Regents of the University of California.
 # All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -93,7 +94,18 @@ class Command(command):
 				# Construct the shosts entry we only use the ip
 				h = '%s' % (ip)
 				self.addOutput('localhost', h)
-		
+
+		# Finally, add the shosts.equiv.local file to the list
+		shostlocal = '/etc/ssh/shosts.equiv.local'
+		try:
+			f = open(shostlocal,'r')
+			self.addOutput('localhost','#\n# Imported from %s\n#' % shostlocal)
+			h = f.read()
+			self.addOutput('localhost',h)
+			f.close()
+		except :
+			pass
+               
 		self.addOutput('localhost', '</file>')
 		self.endOutput(padChar='')
 

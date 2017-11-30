@@ -6,9 +6,10 @@
 # 
 # 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		         version 6.2 (SideWinder)
+# 		         version 6.2 (SideWindwer)
+# 		         version 7.0 (Manzanita)
 # 
-# Copyright (c) 2000 - 2014 The Regents of the University of California.
+# Copyright (c) 2000 - 2017 The Regents of the University of California.
 # All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -75,9 +76,18 @@
 # this handles the case when auto.master is created  by
 # 411 after autofs starts.
 
-/sbin/chkconfig --list autofs | grep on > /dev/null
+/usr/bin/rpm -q systemd >/dev/null 2>&1
 if [ $? -eq 0 ]; then
-	/sbin/service autofs stop
-	/sbin/service autofs start
+	/usr/bin/systemctl list-unit-files | /usr/bin/egrep "autofs.service.*enabled"
+	if [ $? -eq 0 ]; then
+		/usr/bin/systemctl stop autofs.service
+		/usr/bin/systemctl start autofs.service
+	fi
+else
+	/sbin/chkconfig --list autofs | grep on > /dev/null
+	if [ $? -eq 0 ]; then
+		/sbin/service autofs stop
+		/sbin/service autofs start
+	fi
 fi
 
